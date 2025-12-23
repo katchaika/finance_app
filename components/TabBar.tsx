@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { Link } from 'expo-router';
 import { Pressable } from 'react-native';
+import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Entypo from '@expo/vector-icons/Entypo';
@@ -34,7 +35,7 @@ const tabIcons = [
   }
 ]
 
-export default function TabBar({ state, descriptors, navigation }) {
+export default function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
     // const { buildHref } = useLinkBuilder();
 
   return (
@@ -45,7 +46,7 @@ export default function TabBar({ state, descriptors, navigation }) {
         borderTopWidth: 1,
         borderTopColor: 'rgb(40 40 40)'
       }}>
-      {state.routes.map((route, index) => {
+      {state.routes.map((route: any, index: number) => {
         const { options } = descriptors[route.key];
         const label =
           options.tabBarLabel !== undefined
@@ -75,11 +76,9 @@ export default function TabBar({ state, descriptors, navigation }) {
           });
         };
 
-        console.log('tabs ', route);
-
         if (route.name === "addExpense") {
             return (
-              <Link href="/modal" asChild>
+              <Link href="/modal" asChild key={route.key}>
                 <Pressable>
                   {({ pressed }) => (
                     <View style={[
@@ -102,6 +101,7 @@ export default function TabBar({ state, descriptors, navigation }) {
 
         return (
           <TouchableOpacity
+            key={route.key}
             // href={buildHref(route.name, route.params)}
             accessibilityState={isFocused ? { selected: true } : {}}
             accessibilityLabel={options.tabBarAccessibilityLabel}
@@ -109,7 +109,6 @@ export default function TabBar({ state, descriptors, navigation }) {
             onPress={onPress}
             onLongPress={onLongPress}
             style={styles.tab}
-            key={index}
           >
 
             {tabIcons

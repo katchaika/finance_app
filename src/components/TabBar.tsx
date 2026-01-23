@@ -9,28 +9,27 @@ import { AntDesign, MaterialIcons, Entypo } from '@expo/vector-icons';
 
 import Colors from '@/src/constants/Colors';
 
-const tabIcons = [
-  {
-    id: 0,
-    icon: () => <MaterialIcons name="home-filled" size={24} color="black" />,
-    iconFocused: () => <MaterialIcons name="home-filled" size={24} color="rgb(150 150 150)" />
+const tabIcons: Record<number, {
+  icon: JSX.Element; 
+  iconFocused: JSX.Element
+}> = {
+  0: {
+    icon: <MaterialIcons name="home-filled" size={24} color="black" />,
+    iconFocused: <MaterialIcons name="home-filled" size={24} color="rgb(150 150 150)" />
   },
-  {
-    id: 1,
-    icon: () => <Entypo name="bar-graph" size={24} color="rgb(40 40 40)" />,
-    iconFocused: () => <Entypo name="bar-graph" size={24} color="rgb(150 150 150)" />
+  1: {
+    icon: <Entypo name="bar-graph" size={24} color="rgb(40 40 40)" />,
+    iconFocused: <Entypo name="bar-graph" size={24} color="rgb(150 150 150)" />
   },
-  {
-    id: 3,
-    icon: () => <MaterialIcons name="category" size={24} color="rgb(40 40 40)" />,
-    iconFocused: () => <MaterialIcons name="category" size={24} color="rgb(150 150 150)" />
+  3: {
+    icon: <MaterialIcons name="category" size={24} color="rgb(40 40 40)" />,
+    iconFocused: <MaterialIcons name="category" size={24} color="rgb(150 150 150)" />
   },
-  {
-    id: 4,
-    icon: () => <MaterialIcons name="settings" size={24} color="rgb(40 40 40)" />,
-    iconFocused: () => <MaterialIcons name="settings" size={24} color="rgb(150 150 150)" />
+  4: {
+    icon: <MaterialIcons name="settings" size={24} color="rgb(40 40 40)" />,
+    iconFocused: <MaterialIcons name="settings" size={24} color="rgb(150 150 150)" />
   }
-]
+}
 
 export default function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
     // const { buildHref } = useLinkBuilder();
@@ -107,12 +106,7 @@ export default function TabBar({ state, descriptors, navigation }: BottomTabBarP
             onLongPress={onLongPress}
             style={styles.tab}
           >
-
-            {tabIcons
-              .filter(item => item.id === index)
-              .map(item => isFocused ? item.iconFocused() : item.icon()
-            )}
-
+            {isFocused ? tabIcons[index]?.iconFocused : tabIcons[index]?.icon}
           </TouchableOpacity>
         );
       })}

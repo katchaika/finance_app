@@ -3,10 +3,7 @@ import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { Link } from 'expo-router';
 import { Pressable } from 'react-native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import AntDesign from '@expo/vector-icons/AntDesign';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import Entypo from '@expo/vector-icons/Entypo';
-
+import { AntDesign, MaterialIcons, Entypo } from '@expo/vector-icons';
 
 
 

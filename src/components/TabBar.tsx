@@ -7,7 +7,7 @@ import { AntDesign, MaterialIcons, Entypo } from '@expo/vector-icons';
 
 
 
-import Colors from '@/constants/Colors';
+import Colors from '@/src/constants/Colors';
 
 const tabIcons = [
   {

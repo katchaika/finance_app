@@ -3,7 +3,7 @@ import moment from 'moment';
 import "react-native-devsettings";
 
 //import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+import { Text, View } from '@/src/components/Themed';
 
 type ItemExpenses = {
   amount: number;

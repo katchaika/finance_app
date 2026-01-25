@@ -1,15 +1,24 @@
-import React from 'react';
+import { useState } from 'react';
 import { StyleSheet } from 'react-native';
 
-import { ExternalLink } from './ExternalLink';
-import { MonoText } from './StyledText';
-import { Text, View } from './Themed';
+import { ExternalLink } from '../ExternalLink';
+import { MonoText } from '../StyledText';
+import { Text, View } from '../Themed';
+import { Input } from '@/src/components/ui';
 
 import Colors from '@/src/constants/Colors';
 
 export default function EditScreenInfo({ path }: { path: string }) {
+
+  const [value, setValue] = useState<string>('');
+
   return (
     <View>
+      <Input
+        label={'Name'}
+        value={value}
+        onChangeText={setValue}
+      />
       <View style={styles.getStartedContainer}>
         <Text
           style={styles.getStartedText}

@@ -3,6 +3,7 @@ import { Platform, Pressable, StyleSheet, Text, TouchableOpacity } from 'react-n
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Entypo } from '@expo/vector-icons';
 
+import { fieldStyles } from '@/src/components/ui/styles';
 import { View } from '@/src/components/Themed';
 
 type DateInputProps = {
@@ -39,10 +40,10 @@ export function DateInput({ label, value, onChange }: DateInputProps) {
   return ( 
     <>
     <View>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={fieldStyles.label}>{label}</Text>
 
       <Pressable
-        style={[styles.input, styles.dateInput]}
+        style={[fieldStyles.input, styles.dateInput]}
         onPress={() => setShow(true)}
       >
         <Text>{value.toLocaleDateString()}</Text>
@@ -77,20 +78,6 @@ export function DateInput({ label, value, onChange }: DateInputProps) {
 }
 
 const styles = StyleSheet.create({
-  input: {
-    borderWidth: 1,
-    borderRadius: 10,
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    height: 50,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  label: {
-    fontWeight: 500,
-    marginTop: 10,
-    marginBottom: 3,
-  },
   dateInput: {
     justifyContent: 'space-between',
   },

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { View } from '../Themed';
-import { Input } from '@/src/components/ui';
+import { Input, DateInput } from '@/src/components/ui';
 
 type ExpenseForm = {
   name: string;
@@ -29,14 +29,19 @@ export default function AddExpanseScreen({ path }: { path: string }) {
   return (
     <View style={styles.container}>
       <Input
-        label={'Name'}
+        label='Name'
         value={form.name}
         onChangeText={text => formHandler('name', text)}
       />
       <Input
-        label={'Amount'}
+        label='Amount'
         value={form.amount}
         onChangeText={text => formHandler('amount', text)}
+      />
+      <DateInput
+        label='Date'
+        value={form.date}
+        onChange={date => formHandler('date', date)}
       />
     </View>
   );
@@ -46,5 +51,6 @@ const styles = StyleSheet.create({
   container: {
     padding: 16,
     gap: 16,
+    flex: 1,
   }
 });

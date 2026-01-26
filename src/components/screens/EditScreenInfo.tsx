@@ -4,7 +4,6 @@ import { StyleSheet } from 'react-native';
 import { ExternalLink } from '../ExternalLink';
 import { MonoText } from '../StyledText';
 import { Text, View } from '../Themed';
-import { Input } from '@/src/components/ui';
 
 import Colors from '@/src/constants/Colors';
 
@@ -14,11 +13,6 @@ export default function EditScreenInfo({ path }: { path: string }) {
 
   return (
     <View>
-      <Input
-        label={'Name'}
-        value={value}
-        onChangeText={setValue}
-      />
       <View style={styles.getStartedContainer}>
         <Text
           style={styles.getStartedText}

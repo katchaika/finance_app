@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { StyleSheet } from 'react-native';
 
-import { View } from '../Themed';
+import { View } from '@/src/components/Themed';
 import { Input, DateInput } from '@/src/components/ui';
 
 type ExpenseForm = {

@@ -1,57 +1,61 @@
 import React from 'react';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Link } from 'expo-router';
 import { Pressable } from 'react-native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { AntDesign, MaterialIcons, Entypo } from '@expo/vector-icons';
+import { View, useThemeColors } from '@/src/components/Themed';
 
+type TabIcon =
+  | {
+      lib: 'MaterialIcons';
+      name: React.ComponentProps<typeof MaterialIcons>['name'];
+    }
+  | {
+      lib: 'Entypo';
+      name: React.ComponentProps<typeof Entypo>['name'];
+    };
 
+type TabIconProps = {
+  icon: TabIcon;
+  color: string;
+};
 
-import Colors from '@/src/constants/Colors';
+function TabIcon({ icon, color }: TabIconProps) {
+  const size = 24;
 
-const tabIcons: Record<number, {
-  icon: JSX.Element; 
-  iconFocused: JSX.Element
-}> = {
-  0: {
-    icon: <MaterialIcons name="home-filled" size={24} color="black" />,
-    iconFocused: <MaterialIcons name="home-filled" size={24} color="rgb(150 150 150)" />
-  },
-  1: {
-    icon: <Entypo name="bar-graph" size={24} color="rgb(40 40 40)" />,
-    iconFocused: <Entypo name="bar-graph" size={24} color="rgb(150 150 150)" />
-  },
-  3: {
-    icon: <MaterialIcons name="category" size={24} color="rgb(40 40 40)" />,
-    iconFocused: <MaterialIcons name="category" size={24} color="rgb(150 150 150)" />
-  },
-  4: {
-    icon: <MaterialIcons name="settings" size={24} color="rgb(40 40 40)" />,
-    iconFocused: <MaterialIcons name="settings" size={24} color="rgb(150 150 150)" />
+  switch (icon.lib) {
+    case 'MaterialIcons':
+      return <MaterialIcons name={icon.name} size={size} color={color} />;
+
+    case 'Entypo':
+      return <Entypo name={icon.name} size={size} color={color} />;
   }
 }
 
-export default function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
-    // const { buildHref } = useLinkBuilder();
+const tabIconsData: Record<number, TabIcon> = {
+  0: { lib: 'MaterialIcons', name: 'home-filled' },
+  1: { lib: 'Entypo', name: 'bar-graph' },
+  3: { lib: 'MaterialIcons', name: 'category' },
+  4: { lib: 'MaterialIcons', name: 'settings' },
+};
+
+export default function TabBar({ state, navigation }: BottomTabBarProps) {
+
+  const colors = useThemeColors();
 
   return (
     <View style={
       {
         flexDirection: 'row',
-        backgroundColor: '#fff',
         borderTopWidth: 1,
-        borderTopColor: 'rgb(40 40 40)'
+        borderTopColor: colors.border
       }}>
       {state.routes.map((route: any, index: number) => {
-        const { options } = descriptors[route.key];
-        const label =
-          options.tabBarLabel !== undefined
-            ? options.tabBarLabel
-            : options.title !== undefined
-              ? options.title
-              : route.name;
 
         const isFocused = state.index === index;
+
+        const iconData = tabIconsData[index];
 
         const onPress = () => {
           const event = navigation.emit({
@@ -73,40 +77,41 @@ export default function TabBar({ state, descriptors, navigation }: BottomTabBarP
         };
 
         if (route.name === "addExpense") {
-            return (
-              <Link href="/modal" asChild key={route.key}>
-                <Pressable>
-                  {({ pressed }) => (
-                    <View style={[
-                      // { borderColor: pressed ? 'rgba(0,0,0,.5)' : 'black' },
-                      styles.addButton
-                    ]}>
-                      <AntDesign
-                        name="plus"
-                        size={25}
-                        color='#fff'
-                        // color={Colors[colorScheme ?? 'light'].text}
-                        style={{ opacity: pressed ? 0.5 : 1 }}
-                      />
-                    </View>
-                  )}
-                </Pressable>
-              </Link>
-            )
+          return (
+            <Link href="/modal" asChild key={route.key}>
+              <Pressable>
+                {({ pressed }) => (
+                  <View style={[
+                    styles.addButton,
+                    { backgroundColor: colors.tabIconSelected }
+                  ]}>
+                    <AntDesign
+                      name="plus"
+                      size={25}
+                      color={colors.border}
+                      style={{ opacity: pressed ? 0.5 : 1 }}
+                    />
+                  </View>
+                )}
+              </Pressable>
+            </Link>
+          )
         }
 
         return (
           <TouchableOpacity
             key={route.key}
-            // href={buildHref(route.name, route.params)}
             accessibilityState={isFocused ? { selected: true } : {}}
-            accessibilityLabel={options.tabBarAccessibilityLabel}
-            testID={options.tabBarButtonTestID}
             onPress={onPress}
             onLongPress={onLongPress}
             style={styles.tab}
           >
-            {isFocused ? tabIcons[index]?.iconFocused : tabIcons[index]?.icon}
+            {iconData && (
+              <TabIcon
+                icon={iconData}
+                color={isFocused ? colors.tabIconSelected : colors.tabIconDefault}
+              />
+            )}
           </TouchableOpacity>
         );
       })}
@@ -129,6 +134,5 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     marginTop: -20,
-    backgroundColor: 'rgb(40 40 40)'
   }
 });

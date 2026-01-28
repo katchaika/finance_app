@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Platform, Pressable, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { Platform, Pressable, StyleSheet, TouchableOpacity } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Entypo } from '@expo/vector-icons';
 
 import { fieldStyles } from '@/src/components/ui/styles';
-import { View } from '@/src/components/Themed';
+import { View, Text, useThemeColors } from '@/src/components/Themed';
 
 type DateInputProps = {
   label: string;
@@ -15,8 +15,9 @@ type DateInputProps = {
 export function DateInput({ label, value, onChange }: DateInputProps) {
   const [show, setShow] = useState(false);
   const [tempDate, setTempDate] = useState(value);
-  
 
+  const colors = useThemeColors();
+  
   const onPickerChange = (_: any, selectedDate?: Date) => {
     if (Platform.OS !== 'ios') {
       setShow(false);
@@ -43,7 +44,7 @@ export function DateInput({ label, value, onChange }: DateInputProps) {
       <Text style={fieldStyles.label}>{label}</Text>
 
       <Pressable
-        style={[fieldStyles.input, styles.dateInput]}
+        style={[fieldStyles.input, styles.dateInput, { borderColor: colors.border }]}
         onPress={() => setShow(true)}
       >
         <Text>{value.toLocaleDateString()}</Text>
@@ -112,6 +113,6 @@ const styles = StyleSheet.create({
   },
 
   cancel: {
-    color: 'rgb(40 40 40)'
+    //color: 'rgb(40 40 40)'
   }
 });

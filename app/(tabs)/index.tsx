@@ -3,7 +3,7 @@ import moment from 'moment';
 import "react-native-devsettings";
 
 //import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/src/components/Themed';
+import { Text, View, useThemeColors } from '@/src/components/Themed';
 
 type ItemExpenses = {
   amount: number;
@@ -40,6 +40,7 @@ const expenses: ItemExpenses[] = [
 ]
 
 export default function TabOneScreen() {
+  const colors = useThemeColors();
 
   const groupedExpenses = () => {
     const groups: Record<string, Record<string, ItemExpenses[]>> = {};
@@ -71,7 +72,7 @@ export default function TabOneScreen() {
     >
       <View style={styles.itemName}>
         <Text style={styles.categoryName}>{item.category}</Text>
-        <Text style={styles.date}>{moment(item.date).format('DD/MM/YYYY')}</Text>
+        <Text style={[styles.date, { color: colors.secondaryText }]}>{moment(item.date).format('DD/MM/YYYY')}</Text>
       </View>
       <Text style={styles.amount}>{item.amount.toFixed(2)}</Text>
     </View>
@@ -82,7 +83,14 @@ export default function TabOneScreen() {
 
     return (
       <>
-        <View style={[styles.monthTitleContainer, styles.containerText]}>
+        <View style={[
+          styles.monthTitleContainer,
+          styles.containerText, 
+          { 
+            borderColor: colors.border, 
+            backgroundColor: colors.secondaryBackground
+          }
+        ]}>
           <Text style={styles.monthTitle}>{item.month}</Text>
           <Text style={styles.monthTitle}>{summ.toFixed(2)}</Text>
         </View>
@@ -121,7 +129,6 @@ const styles = StyleSheet.create({
   yearTitle: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: '#323232',
     marginVertical: 15,
     textAlign: "center"
   },
@@ -129,30 +136,24 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingVertical: 15,
-    borderTopColor: '#DDDDDD',
     borderTopWidth: 1,
-    borderBottomColor: '#DDDDDD',
     borderBottomWidth: 1,
   },
   monthTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#323232',
   },
   categoryName: {
     fontSize: 18,
     fontWeight: '400',
-    color: 'rgb(40 40 40)'
   },
   amount: {
     fontSize: 16,
     fontWeight: '500',
-    color: 'rgb(40 40 40)'
   },
   date: {
     fontSize: 12,
     marginTop: 3,
-    color: 'rgb(120 120 120)'
   },
   container: {
     flex: 1,
@@ -160,15 +161,5 @@ const styles = StyleSheet.create({
   containerText: {
     paddingLeft: 15,
     paddingRight: 15,
-  },
-  separator: {
-    backgroundColor: '#eee',
-    height: 1,
-    width: '100%',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'rgb(120 120 120)'
   },
 });

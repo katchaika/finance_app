@@ -83,13 +83,14 @@ export default function TabBar({ state, navigation }: BottomTabBarProps) {
                 {({ pressed }) => (
                   <View style={[
                     styles.addButton,
-                    { backgroundColor: colors.tabIconSelected }
+                    { 
+                      backgroundColor: pressed ? colors.tabIconDefault : colors.tintColor,
+                    }
                   ]}>
                     <AntDesign
                       name="plus"
                       size={25}
-                      color={colors.border}
-                      style={{ opacity: pressed ? 0.5 : 1 }}
+                      color={colors.tabIconSelected}
                     />
                   </View>
                 )}

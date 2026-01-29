@@ -44,31 +44,42 @@ export function DateInput({ label, value, onChange }: DateInputProps) {
       <Text style={fieldStyles.label}>{label}</Text>
 
       <Pressable
-        style={[fieldStyles.input, styles.dateInput, { borderColor: colors.border }]}
+        style={[fieldStyles.input, styles.dateInput, 
+          {
+            borderColor: colors.border,
+            backgroundColor: colors.secondaryBackground
+          }
+        ]}
         onPress={() => setShow(true)}
       >
         <Text>{value.toLocaleDateString()}</Text>
-        <Entypo name="calendar" size={24} color="rgb(40 40 40)" />
+        <Entypo name="calendar" size={24} color={colors.tabIconDefault} />
       </Pressable>
 
       
     </View>
     {show && (
         <View style={styles.overlay}>
-          <View style={styles.sheet}>
+          <View style={[styles.sheet, { backgroundColor: colors.background }]}>
             <DateTimePicker
               value={value}
               mode="date"
               display={Platform.OS === 'ios' ? 'spinner' : 'default'}
               onChange={onPickerChange}
             />
-            <View style={styles.buttons}>
+            <View style={[styles.buttons, { borderColor: colors.border }]}>
               <TouchableOpacity onPress={onCancel}>
-                <Text style={[styles.action, styles.cancel]}>Cancel</Text>
+                <Text style={[
+                  styles.action,
+                  { color: colors.secondaryText }
+                ]}>Cancel</Text>
               </TouchableOpacity>
 
               <TouchableOpacity onPress={onDone}>
-                <Text style={styles.action}>Done</Text>
+                <Text style={[
+                  styles.action, 
+                  { fontWeight: '600', color: colors.tintColor }
+                ]}>Done</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -92,27 +103,18 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   sheet: {
-    backgroundColor: '#fff',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     paddingBottom: 20,
   },
-
   buttons: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 16,
     borderTopWidth: 1,
-    borderColor: '#eee',
   },
-
   action: {
     fontSize: 16,
-    color: '#007aff',
     paddingHorizontal: 16
   },
-
-  cancel: {
-    //color: 'rgb(40 40 40)'
-  }
 });

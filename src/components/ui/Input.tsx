@@ -19,6 +19,7 @@ export function Input({ label, ...props }: InputProps) {
             //borderColor: error ? colors.error : colors.border,
             borderColor: colors.border,
             color: colors.text,
+            backgroundColor: colors.secondaryBackground
           },
         ]}
         {...props}

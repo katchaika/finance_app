@@ -1,19 +1,19 @@
-import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
-import { Link } from 'expo-router';
-import { Pressable } from 'react-native';
-import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { AntDesign, MaterialIcons, Entypo } from '@expo/vector-icons';
-import { View, useThemeColors } from '@/src/components/Themed';
+import React from "react";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import { Link } from "expo-router";
+import { Pressable } from "react-native";
+import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
+import { AntDesign, MaterialIcons, Entypo } from "@expo/vector-icons";
+import { View, useThemeColors } from "@/src/components/Themed";
 
 type TabIcon =
   | {
-      lib: 'MaterialIcons';
-      name: React.ComponentProps<typeof MaterialIcons>['name'];
+      lib: "MaterialIcons";
+      name: React.ComponentProps<typeof MaterialIcons>["name"];
     }
   | {
-      lib: 'Entypo';
-      name: React.ComponentProps<typeof Entypo>['name'];
+      lib: "Entypo";
+      name: React.ComponentProps<typeof Entypo>["name"];
     };
 
 type TabIconProps = {
@@ -25,41 +25,35 @@ function TabIcon({ icon, color }: TabIconProps) {
   const size = 24;
 
   switch (icon.lib) {
-    case 'MaterialIcons':
+    case "MaterialIcons":
       return <MaterialIcons name={icon.name} size={size} color={color} />;
 
-    case 'Entypo':
+    case "Entypo":
       return <Entypo name={icon.name} size={size} color={color} />;
   }
 }
 
 const tabIconsData: Record<number, TabIcon> = {
-  0: { lib: 'MaterialIcons', name: 'home-filled' },
-  1: { lib: 'Entypo', name: 'bar-graph' },
-  3: { lib: 'MaterialIcons', name: 'category' },
-  4: { lib: 'MaterialIcons', name: 'settings' },
+  0: { lib: "MaterialIcons", name: "home-filled" },
+  1: { lib: "Entypo", name: "bar-graph" },
+  3: { lib: "MaterialIcons", name: "category" },
+  4: { lib: "MaterialIcons", name: "settings" },
 };
 
 export default function TabBar({ state, navigation }: BottomTabBarProps) {
-
   const colors = useThemeColors();
 
   return (
-    <View style={
-      {
-        flexDirection: 'row',
-        borderTopWidth: 1,
-        borderTopColor: colors.border
-      }}>
+    <View style={[styles.container, { borderTopColor: colors.border }]}>
+      {/* TODO rewrite any */}
       {state.routes.map((route: any, index: number) => {
-
         const isFocused = state.index === index;
 
         const iconData = tabIconsData[index];
 
         const onPress = () => {
           const event = navigation.emit({
-            type: 'tabPress',
+            type: "tabPress",
             target: route.key,
             canPreventDefault: true,
           });
@@ -71,7 +65,7 @@ export default function TabBar({ state, navigation }: BottomTabBarProps) {
 
         const onLongPress = () => {
           navigation.emit({
-            type: 'tabLongPress',
+            type: "tabLongPress",
             target: route.key,
           });
         };
@@ -81,12 +75,16 @@ export default function TabBar({ state, navigation }: BottomTabBarProps) {
             <Link href="/modal" asChild key={route.key}>
               <Pressable>
                 {({ pressed }) => (
-                  <View style={[
-                    styles.addButton,
-                    { 
-                      backgroundColor: pressed ? colors.tabIconDefault : colors.tintColor,
-                    }
-                  ]}>
+                  <View
+                    style={[
+                      styles.addButton,
+                      {
+                        backgroundColor: pressed
+                          ? colors.tabIconDefault
+                          : colors.tintColor,
+                      },
+                    ]}
+                  >
                     <AntDesign
                       name="plus"
                       size={25}
@@ -96,7 +94,7 @@ export default function TabBar({ state, navigation }: BottomTabBarProps) {
                 )}
               </Pressable>
             </Link>
-          )
+          );
         }
 
         return (
@@ -110,7 +108,9 @@ export default function TabBar({ state, navigation }: BottomTabBarProps) {
             {iconData && (
               <TabIcon
                 icon={iconData}
-                color={isFocused ? colors.tabIconSelected : colors.tabIconDefault}
+                color={
+                  isFocused ? colors.tabIconSelected : colors.tabIconDefault
+                }
               />
             )}
           </TouchableOpacity>
@@ -121,19 +121,23 @@ export default function TabBar({ state, navigation }: BottomTabBarProps) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    borderTopWidth: 1,
+  },
   tab: {
     flex: 1,
     height: 70,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     paddingBottom: 20,
   },
   addButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 50,
     width: 70,
     height: 70,
     marginTop: -20,
-  }
+  },
 });

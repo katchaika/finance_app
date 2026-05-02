@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { View } from '@/src/components/Themed';
-import { Input, DateInput } from '@/src/components/ui';
+import { Input, DateInput, Button } from '@/src/components/ui';
 
 type ExpenseForm = {
   name: string;
@@ -26,22 +26,30 @@ export default function AddExpanseScreen({ path }: { path: string }) {
     setForm(prev => ({ ...prev, [key]: value }))
   }
 
+  const onPress = () => {};
+
   return (
     <View style={styles.container}>
-      <Input
-        label='Name'
-        value={form.name}
-        onChangeText={text => formHandler('name', text)}
-      />
-      <Input
-        label='Amount'
-        value={form.amount}
-        onChangeText={text => formHandler('amount', text)}
-      />
-      <DateInput
-        label='Date'
-        value={form.date}
-        onChange={date => formHandler('date', date)}
+      <View style={{ flex: 1 }}>
+        <Input
+          label='Name'
+          value={form.name}
+          onChangeText={text => formHandler('name', text)}
+        />
+        <Input
+          label='Amount'
+          value={form.amount}
+          onChangeText={text => formHandler('amount', text)}
+        />
+        <DateInput
+          label='Date'
+          value={form.date}
+          onChange={date => formHandler('date', date)}
+        />
+      </View>
+      <Button
+        label='Save'
+        onPress={onPress}
       />
     </View>
   );

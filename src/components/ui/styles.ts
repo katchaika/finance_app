@@ -1,8 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 export const fieldStyles = StyleSheet.create({
   label: {
-    fontWeight: '500',
+    fontWeight: "500",
     marginTop: 10,
     marginBottom: 3,
   },
@@ -12,7 +12,19 @@ export const fieldStyles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 10,
     height: 50,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  button: {
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    height: 50,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonLabel: {
+    fontWeight: "600",
   },
 });
